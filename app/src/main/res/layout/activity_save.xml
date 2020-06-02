@@ -7,7 +7,7 @@
     tools:context=".SaveActivity">
 
     <TextView
-        android:id="@+id/syoujiText"
+        android:id="@+id/selectText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/syoujiText" />
+        app:layout_constraintTop_toBottomOf="@+id/selectText" />
 
     <Button
         android:id="@+id/backButton"
