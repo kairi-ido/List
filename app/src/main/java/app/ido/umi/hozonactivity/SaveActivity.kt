@@ -24,6 +24,7 @@ class SaveActivity : AppCompatActivity() {
             finish()
         }
 
+
         hozonButton.setOnClickListener {
             val name:String = nameEditText.text.toString()
             create(name)
