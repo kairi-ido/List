@@ -45,7 +45,6 @@ class SaveActivity : AppCompatActivity() {
             val name:String = nameEditText.text.toString()
             create(name)
         }
-
     }
 
 

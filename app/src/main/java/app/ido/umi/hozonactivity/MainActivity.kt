@@ -1,29 +1,30 @@
 package app.ido.umi.hozonactivity
 
-import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.view.WindowManager
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.list_item.*
 import java.util.*
+import androidx.fragment.app.Fragment as Fragment1
 
 class MainActivity : AppCompatActivity() {
 
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
     }
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
                 override fun onItemClick(item: Task) {
                     // クリック時の処理
-                    Toast.makeText(applicationContext, item.content + "を削除しました", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT).show()
                     delete(item.id)
                 }
             }, true)
@@ -58,6 +59,38 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
     }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+
+        val inflater = menuInflater
+        //メニューのリソース選択
+        inflater.inflate(R.menu.bottom_navigation_menu, menu)
+        return true
+    }
+
+    //メニューのアイテムを押下した時の処理の関数
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+
+            R.id.navi_home -> {
+
+                val intent = Intent(applicationContext,SaveActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+
+            R.id.navi_list -> {
+
+                val intent =Intent(applicationContext,MainActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -116,6 +149,7 @@ class MainActivity : AppCompatActivity() {
             realm.deleteAll()
         }
     }
+
 
 
 }
