@@ -36,6 +36,7 @@ class TaskAdapter(
         holder.dateTextView.text =task.date
 
 
+
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): TaskViewHolder {
         val v = LayoutInflater.from(context).inflate(R.layout.list_item, viewGroup, false)
