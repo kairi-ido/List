@@ -20,6 +20,9 @@ class SaveActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save)
+        //ActionBarにMainActivityへ戻る矢印をつけます
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         //datepicker 宣言
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
@@ -36,19 +39,19 @@ class SaveActivity : AppCompatActivity() {
             dtp.show()
 
         }
-        //戻るボタンを押したらMainActivityへ
-        backButton.setOnClickListener {
-            finish()
-        }
+
+
         //登録ボタンを押したらnameEditTextの内容を登録する
         hozonButton.setOnClickListener {
             val name:String = nameEditText.text.toString()
             create(name)
         }
     }
-
-
-
+    //MainActivityへ戻ります
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return super.onSupportNavigateUp()
+    }
 
 
     //realmに新規リストとしてnameEditTextで書いたことを追加

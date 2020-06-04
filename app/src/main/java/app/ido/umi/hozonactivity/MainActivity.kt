@@ -22,13 +22,15 @@ class MainActivity : AppCompatActivity() {
         Realm.getDefaultInstance()
     }
 
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        supportActionBar?.title = "とりみっと"
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+        getSupportActionBar()?.setIcon(R.mipmap.ic_launcher_foreground)
+
 
         //フローティングアクションボタン機能
         val fab: View = findViewById(R.id.fab)
@@ -73,14 +75,14 @@ class MainActivity : AppCompatActivity() {
     //メニューのアイテムを押下した時の処理の関数
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.getItemId()) {
-
+            //ホームを押したときの処理
             R.id.navi_home -> {
 
-                val intent = Intent(applicationContext,SaveActivity::class.java)
+                val intent = Intent(applicationContext,ExplanationActivity::class.java)
                 startActivity(intent)
                 return true
             }
-
+            //リストを押した時の処理
             R.id.navi_list -> {
 
                 val intent =Intent(applicationContext,MainActivity::class.java)
