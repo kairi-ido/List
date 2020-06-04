@@ -33,8 +33,8 @@ class TaskAdapter(
 
         holder.imageView.setImageResource(task.imageId)
         holder.contentTextView.text = task.name
-        holder.dateTextView.text =
-            SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.JAPANESE).format(task.createdAt)
+        holder.dateTextView.text =task.date
+
 
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): TaskViewHolder {

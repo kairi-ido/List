@@ -20,6 +20,7 @@ class SaveActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save)
+
         //ActionBarにMainActivityへ戻る矢印をつけます
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -32,7 +33,7 @@ class SaveActivity : AppCompatActivity() {
         //タップボタンを押したらdatepickerがでできて、selectTextに表示
         dateButton.setOnClickListener {
             val dtp = DatePickerDialog(this, DatePickerDialog.OnDateSetListener{ view, y, m, d ->
-                selectText.text = "${y}年"+"${m}月"+"${d}日"
+                selectText.text = "${y}年"+"${m+1}月"+"${d}日"
             },year,month,day
             )
 
@@ -44,7 +45,8 @@ class SaveActivity : AppCompatActivity() {
         //登録ボタンを押したらnameEditTextの内容を登録する
         hozonButton.setOnClickListener {
             val name:String = nameEditText.text.toString()
-            create(name)
+            val date:String = selectText.text.toString()
+            create(name,date)
         }
     }
     //MainActivityへ戻ります
@@ -55,12 +57,15 @@ class SaveActivity : AppCompatActivity() {
 
 
     //realmに新規リストとしてnameEditTextで書いたことを追加
-    fun create(name:String) {
+    fun create(name:String,date:String) {
 
             realm.executeTransaction {
                 val task = it.createObject(Task::class.java, UUID.randomUUID().toString())
 
                 task.name = name
+                task.date = date
+
+
 
 
             }

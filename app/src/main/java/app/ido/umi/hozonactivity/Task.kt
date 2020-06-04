@@ -9,5 +9,6 @@ open class Task(
     open var imageId: Int = 0,
     open var content: String = "",
     open var name:String="",
-    open var createdAt: Date = Date(System.currentTimeMillis())
+    open var date:String=""
+
 ) : RealmObject()

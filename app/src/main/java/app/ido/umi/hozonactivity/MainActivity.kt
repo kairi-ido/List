@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+        //アクションバーにアイコンを表示
         supportActionBar?.title = "とりみっと"
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         getSupportActionBar()?.setIcon(R.mipmap.ic_launcher_foreground)
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun readAll(): RealmResults<Task> {
-        return realm.where(Task::class.java).findAll().sort("createdAt", Sort.ASCENDING)
+        return realm.where(Task::class.java).findAll().sort("date", Sort.ASCENDING)
     }
 
     fun update(id: String, content: String) {
