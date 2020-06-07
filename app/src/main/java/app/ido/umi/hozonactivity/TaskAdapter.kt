@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -14,16 +15,16 @@ import kotlinx.android.synthetic.main.list_item.view.*
 
 class TaskAdapter(
     private val context: Context,
-    private var taskList: OrderedRealmCollection<Task>?,
+    private var taskList: OrderedRealmCollection<Item>?,
     private var listener: OnItemClickListener,
     private val autoUpdate: Boolean
 ) :
-    RealmRecyclerViewAdapter<Task, TaskAdapter.TaskViewHolder>(taskList, autoUpdate) {
+    RealmRecyclerViewAdapter<Item, TaskAdapter.TaskViewHolder>(taskList, autoUpdate) {
 
     override fun getItemCount(): Int = taskList?.size ?: 0
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val task: Task = taskList?.get(position) ?: return
+        val task: Item = taskList?.get(position) ?: return
 
         holder.container.setOnClickListener{
             listener.onItemClick(task)
@@ -32,6 +33,9 @@ class TaskAdapter(
         holder.imageView.setImageResource(task.imageId)
         holder.contentTextView.text = task.name
         holder.dateTextView.text =task.date
+        holder.check.setOnCheckedChangeListener { _, isChecked ->
+            listener.onChosenItemsClick(task, isChecked)
+        }
 
 
 
@@ -46,12 +50,16 @@ class TaskAdapter(
         val imageView: ImageView = view.imageView
         val contentTextView: TextView = view.contentTextView
         val dateTextView: TextView = view.dateTextView
+        val check:CheckBox = view.check
     }
 
 
     interface OnItemClickListener {
-        fun onItemClick(item: Task)
+        fun onItemClick(item: Item)
+        abstract fun onChosenItemsClick(item: Any, checked: Boolean)
     }
 
 
 }
+
+

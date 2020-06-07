@@ -3,13 +3,9 @@ package app.ido.umi.hozonactivity
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.system.Os.read
 import android.widget.Toast
 import io.realm.Realm
-import io.realm.RealmResults
-import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_save.*
-import kotlinx.android.synthetic.main.list_item.*
 import java.util.*
 
 class SaveActivity : AppCompatActivity() {
@@ -64,15 +60,18 @@ class SaveActivity : AppCompatActivity() {
     fun create(name:String,date:String) {
 
             realm.executeTransaction {
-                val task = it.createObject(Task::class.java, UUID.randomUUID().toString())
+                val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
 
                 task.name = name
                 task.date = date
+
             }
         }
 
 
     }
+
+
 
 
 

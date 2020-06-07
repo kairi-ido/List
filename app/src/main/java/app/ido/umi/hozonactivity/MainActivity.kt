@@ -12,6 +12,8 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.list_item.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("UNREACHABLE_CODE")
@@ -24,6 +26,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val df = SimpleDateFormat("yyyy年MM月dd日")
+        val message = df.format(Date())
+
+        if(df == dateTextView){
+
+            Toast.makeText(applicationContext, "賞味期限です", Toast.LENGTH_LONG).show()
+        }
+
+
 
         //アクションバーにアイコンを表示
         supportActionBar?.title = "とりみっと"
@@ -48,13 +60,18 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
         val adapter =
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
-                override fun onItemClick(item: Task) {
+                override fun onItemClick(item: Item) {
                     // クリック時の処理
 
                     Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT).show()
                     delete(item.id)
+                }
+
+                override fun onChosenItemsClick(item: Any, checked: Boolean) {
+
                 }
             }, true)
 
@@ -117,25 +134,28 @@ class MainActivity : AppCompatActivity() {
     fun create(imageId: Int, content: String) {
 
         realm.executeTransaction {
-            val task = it.createObject(Task::class.java, UUID.randomUUID().toString())
+            val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
             task.imageId = imageId
             task.content = content
         }
     }
 
-    fun readAll(): RealmResults<Task> {
-        return realm.where(Task::class.java).findAll().sort("date", Sort.ASCENDING)
+
+
+
+    fun readAll(): RealmResults<Item> {
+        return realm.where(Item::class.java).findAll().sort("date", Sort.ASCENDING)
     }
 
     fun update(id: String, content: String) {
         realm.executeTransaction {
-            val task = realm.where(Task::class.java).equalTo("id", id).findFirst()
+            val task = realm.where(Item::class.java).equalTo("id", id).findFirst()
                 ?: return@executeTransaction
             task.content = content
         }
     }
 
-    fun update(task: Task, content: String) {
+    fun update(task: Item, content: String) {
         realm.executeTransaction {
             task.content = content
         }
@@ -143,13 +163,13 @@ class MainActivity : AppCompatActivity() {
 
     fun delete(id: String) {
         realm.executeTransaction {
-            val task = realm.where(Task::class.java).equalTo("id", id).findFirst()
+            val task = realm.where(Item::class.java).equalTo("id", id).findFirst()
                 ?: return@executeTransaction
             task.deleteFromRealm()
         }
     }
 
-    fun delete(task: Task) {
+    fun delete(task: Item) {
         realm.executeTransaction {
             task.deleteFromRealm()
         }
@@ -162,7 +182,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-        }
+
+
+    }
+
+
+
+
+
+
 
 
 
