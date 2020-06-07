@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.system.Os.read
+import android.widget.Toast
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
@@ -47,6 +48,9 @@ class SaveActivity : AppCompatActivity() {
             val name:String = nameEditText.text.toString()
             val date:String = selectText.text.toString()
             create(name,date)
+
+            Toast.makeText(applicationContext, "登録しました", Toast.LENGTH_LONG).show()
+
         }
     }
     //MainActivityへ戻ります
