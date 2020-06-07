@@ -8,14 +8,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import androidx.fragment.app.Fragment as Fragment1
 
+@Suppress("UNREACHABLE_CODE")
 class MainActivity : AppCompatActivity() {
 
     private val realm: Realm by lazy {
@@ -47,10 +46,13 @@ class MainActivity : AppCompatActivity() {
             createDummyData()
         }
 
+
+
         val adapter =
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
                 override fun onItemClick(item: Task) {
                     // クリック時の処理
+
                     Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT).show()
                     delete(item.id)
                 }
@@ -82,10 +84,17 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
                 return true
             }
-            //リストを押した時の処理
+            //残り物リストを押した時の処理
             R.id.navi_list -> {
 
                 val intent =Intent(applicationContext,MainActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            //買い物リストを押した時の処理
+            R.id.navi_shopping ->{
+
+                val intent=Intent(applicationContext,ShoppingActivity::class.java)
                 startActivity(intent)
                 return true
             }
@@ -153,6 +162,17 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+        }
 
-}
+
+
+
+
+
+
+
+
+
+
+
 

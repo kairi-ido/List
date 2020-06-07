@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".SaveActivity">
 
+
     <TextView
         android:id="@+id/selectText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="39dp"
         android:text="賞味期限"
         app:layout_constraintBottom_toTopOf="@+id/hozonButton"
         app:layout_constraintStart_toStartOf="@+id/hozonButton"
@@ -21,7 +22,7 @@
         android:id="@+id/dateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="45dp"
         android:background="@drawable/button_background"
         android:text="日付選択"
         app:layout_constraintBottom_toTopOf="@+id/selectText"
@@ -29,12 +30,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
 
-
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="33dp"
+        android:layout_marginBottom="81dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="商品名を入れてね"
@@ -57,10 +57,10 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="156dp"
+        android:layout_width="114dp"
         android:layout_height="0dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginBottom="83dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="62dp"
         app:layout_constraintBottom_toTopOf="@+id/nameEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

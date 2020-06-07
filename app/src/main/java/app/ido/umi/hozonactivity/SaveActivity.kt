@@ -64,12 +64,9 @@ class SaveActivity : AppCompatActivity() {
 
                 task.name = name
                 task.date = date
-
-
-
-
             }
         }
+
 
     }
 

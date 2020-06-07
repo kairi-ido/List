@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class TaskAdapter(
     private val context: Context,
@@ -50,8 +48,10 @@ class TaskAdapter(
         val dateTextView: TextView = view.dateTextView
     }
 
+
     interface OnItemClickListener {
         fun onItemClick(item: Task)
     }
+
 
 }
