@@ -3,6 +3,7 @@ package app.ido.umi.hozonactivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.realm.Realm
@@ -13,7 +14,7 @@ import java.util.*
 
 
 class ShoppingActivity : AppCompatActivity() {
-
+    //realmを開く
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
     }
@@ -36,12 +37,21 @@ class ShoppingActivity : AppCompatActivity() {
         val adapter =
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
                 override fun onItemClick(item: Item) {
-                    // クリック時の処理
-
-                    Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT)
+                        .show()
                     delete(item.id)
                 }
-            }, true)
+
+                override fun  onChosenItemsClick(task: Item, checked: Boolean) {
+                    // クリック時の処理
+                    Toast.makeText(applicationContext, "買い物リストに移行します", Toast.LENGTH_LONG).show()
+
+                    realm.executeTransaction {
+                        task.needPurchase = checked
+                    }
+                }
+
+                }, true)
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -52,9 +62,11 @@ class ShoppingActivity : AppCompatActivity() {
 
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         realm.close()
+
 
     }
     fun createDummyData() {
@@ -62,6 +74,7 @@ class ShoppingActivity : AppCompatActivity() {
             create(R.drawable.ic_launcher_background, "商品名 $i")
         }
     }
+
 
     fun create(imageId: Int, content: String) {
 
@@ -74,7 +87,7 @@ class ShoppingActivity : AppCompatActivity() {
 
 
 
-
+//realmの呼び出し
     fun readAll(): RealmResults<Item> {
         return realm.where(Item::class.java).equalTo("needPurchase",true).findAll().sort("date", Sort.ASCENDING)
     }
@@ -113,11 +126,11 @@ class ShoppingActivity : AppCompatActivity() {
         }
     }
 
-
-
     override fun onSupportNavigateUp(): Boolean {
             finish()
             return super.onSupportNavigateUp()
         }
+
+
 
     }

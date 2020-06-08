@@ -4,10 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
@@ -33,8 +30,9 @@ class TaskAdapter(
         holder.imageView.setImageResource(task.imageId)
         holder.contentTextView.text = task.name
         holder.dateTextView.text =task.date
+
         holder.check.setOnCheckedChangeListener { _, isChecked ->
-            listener.onChosenItemsClick(task, isChecked)
+            listener.onChosenItemsClick(Item(), isChecked)
         }
 
 
@@ -56,7 +54,11 @@ class TaskAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(item: Item)
-        abstract fun onChosenItemsClick(item: Any, checked: Boolean)
+
+        fun onChosenItemsClick(task: Item, checked: Boolean){
+
+
+    }
     }
 
 

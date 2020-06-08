@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,15 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val df = SimpleDateFormat("yyyy年MM月dd日")
-        val message = df.format(Date())
-
-        if(df == dateTextView){
-
-            Toast.makeText(applicationContext, "賞味期限です", Toast.LENGTH_LONG).show()
-        }
-
-
 
         //アクションバーにアイコンを表示
         supportActionBar?.title = "とりみっと"
@@ -46,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         //フローティングアクションボタン機能
         val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener {
-                //賞味期限、商品名登録画面へ
-            val intent = Intent(applicationContext,SaveActivity::class.java)
+            //賞味期限、商品名登録画面へ
+            val intent = Intent(applicationContext, SaveActivity::class.java)
             startActivity(intent)
         }
 
@@ -59,27 +51,37 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-
         val adapter =
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
                 override fun onItemClick(item: Item) {
                     // クリック時の処理
 
-                    Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT)
+                        .show()
                     delete(item.id)
                 }
+                override fun  onChosenItemsClick(task: Item, checked: Boolean){
+                    // クリック時の処理
+                    Toast.makeText(applicationContext, "買い物リストに移行します", Toast.LENGTH_LONG).show()
 
-                override fun onChosenItemsClick(item: Any, checked: Boolean) {
+                    realm.executeTransaction {
+                        task.needPurchase = checked
+                    }
+
 
                 }
+
+
             }, true)
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+
     }
+
+
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -97,21 +99,21 @@ class MainActivity : AppCompatActivity() {
             //ホームを押したときの処理
             R.id.navi_home -> {
 
-                val intent = Intent(applicationContext,ExplanationActivity::class.java)
+                val intent = Intent(applicationContext, ExplanationActivity::class.java)
                 startActivity(intent)
                 return true
             }
             //残り物リストを押した時の処理
             R.id.navi_list -> {
 
-                val intent =Intent(applicationContext,MainActivity::class.java)
+                val intent = Intent(applicationContext, MainActivity::class.java)
                 startActivity(intent)
                 return true
             }
             //買い物リストを押した時の処理
-            R.id.navi_shopping ->{
+            R.id.navi_shopping -> {
 
-                val intent=Intent(applicationContext,ShoppingActivity::class.java)
+                val intent = Intent(applicationContext, ShoppingActivity::class.java)
                 startActivity(intent)
                 return true
             }
@@ -120,11 +122,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+
     override fun onDestroy() {
         super.onDestroy()
         realm.close()
 
     }
+
     fun createDummyData() {
         for (i in 0..10) {
             create(R.drawable.ic_launcher_background, "商品名 $i")
@@ -141,8 +146,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
     fun readAll(): RealmResults<Item> {
         return realm.where(Item::class.java).findAll().sort("date", Sort.ASCENDING)
     }
@@ -154,6 +157,10 @@ class MainActivity : AppCompatActivity() {
             task.content = content
         }
     }
+
+
+
+
 
     fun update(task: Item, content: String) {
         realm.executeTransaction {
@@ -182,25 +189,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
