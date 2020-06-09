@@ -1,8 +1,11 @@
 package app.ido.umi.hozonactivity
 
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_save.*
@@ -36,6 +39,10 @@ class SaveActivity : AppCompatActivity() {
 
             dtp.show()
 
+            imageButton.setOnClickListener {
+                selectPicture()
+            }
+
         }
 
 
@@ -49,6 +56,38 @@ class SaveActivity : AppCompatActivity() {
 
         }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != RESULT_OK) {
+            return
+        }
+        when (requestCode) {
+            READ_REQUEST_CODE -> {
+                try {
+                    data?.data?.also { uri ->
+                        val inputStream = contentResolver?.openInputStream(uri)
+                        val image = BitmapFactory.decodeStream(inputStream)
+                        val imageView = findViewById<ImageView>(R.id.imageView)
+                        imageView.setImageBitmap(image)
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+    private fun selectPicture() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+        }
+        startActivityForResult(intent, READ_REQUEST_CODE)
+    }
+
+    companion object {
+        private const val READ_REQUEST_CODE: Int = 42
+    }
+
     //MainActivityへ戻ります
     override fun onSupportNavigateUp(): Boolean {
         finish()

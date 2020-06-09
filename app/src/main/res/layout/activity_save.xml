@@ -11,36 +11,51 @@
         android:id="@+id/selectText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginBottom="39dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="53dp"
         android:text="賞味期限"
         app:layout_constraintBottom_toTopOf="@+id/hozonButton"
-        app:layout_constraintStart_toStartOf="@+id/hozonButton"
-        app:layout_constraintTop_toBottomOf="@+id/dateButton" />
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
 
     <Button
         android:id="@+id/dateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="38dp"
         android:background="@drawable/button_background"
         android:text="日付選択"
-        app:layout_constraintBottom_toTopOf="@+id/selectText"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+
+    <Button
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="82dp"
+        android:background="@drawable/button_background"
+        android:text="画像選択"
+        app:layout_constraintBottom_toTopOf="@+id/selectText"
+        app:layout_constraintStart_toStartOf="@+id/dateButton"
+        app:layout_constraintTop_toBottomOf="@+id/dateButton" />
 
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="81dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginEnd="86dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="商品名を入れてね"
         app:layout_constraintBottom_toTopOf="@+id/dateButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
@@ -53,18 +68,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectText" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="114dp"
+        android:layout_width="146dp"
         android:layout_height="0dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="62dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="26dp"
         app:layout_constraintBottom_toTopOf="@+id/nameEditText"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bun" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="381dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@+id/hozonButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/selectText"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

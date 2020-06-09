@@ -32,7 +32,7 @@ class TaskAdapter(
         holder.dateTextView.text =task.date
 
         holder.check.setOnCheckedChangeListener { _, isChecked ->
-            listener.onChosenItemsClick(Item(), isChecked)
+            listener.onChosenItemsClick(Item(needPurchase = true), isChecked)
         }
 
 
@@ -54,11 +54,9 @@ class TaskAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(item: Item)
+        fun onChosenItemsClick(item: Item, checked: Boolean)
 
-        fun onChosenItemsClick(task: Item, checked: Boolean){
 
-
-    }
     }
 
 
