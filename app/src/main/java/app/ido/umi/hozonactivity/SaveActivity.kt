@@ -9,7 +9,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_save.*
-import kotlinx.android.synthetic.main.activity_save.photo
 import java.util.*
 
 class SaveActivity : AppCompatActivity() {
@@ -17,7 +16,7 @@ class SaveActivity : AppCompatActivity() {
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
     }
-
+    //SaveActivityが起動した時に起こる
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save)
@@ -51,10 +50,10 @@ class SaveActivity : AppCompatActivity() {
         hozonButton.setOnClickListener {
             val name:String = nameEditText.text.toString()
             val date:String = selectText.text.toString()
-            val imageId = photo
 
-            create(name,date,imageId)
-
+            //create（）というメソッドに引数をして渡す
+            create(name,date)
+            //Toastで登録できたと表示する
             Toast.makeText(applicationContext, "登録しました", Toast.LENGTH_LONG).show()
 
         }
@@ -74,7 +73,7 @@ class SaveActivity : AppCompatActivity() {
                     data?.data?.also { uri ->
                         val inputStream = contentResolver?.openInputStream(uri)
                         val image = BitmapFactory.decodeStream(inputStream)
-                        val imageView = findViewById<ImageView>(R.id.photo)
+                        val imageView = findViewById<ImageView>(R.id.imageView)
                         imageView.setImageBitmap(image)
                     }
                 } catch (e: Exception) {
@@ -108,19 +107,17 @@ class SaveActivity : AppCompatActivity() {
 
 
     //realmに新規リストとしてnameEditTextで書いたことを追加
-    fun create(name: String, date: String, imageId: ImageView) {
+    fun create(name: String, date: String) {
 
+            //realm.executeTransactionというブロックを作り、その中でrealmを使ってデータベースの操作をする。
+            //これを書くことでデータベースへの書き込み(データの作成、更新、削除)ができるようになる。
             realm.executeTransaction {
+                //新規リスト作成。it.createObject(データ型::class.java)と書くことでDBに新しいオブジェクトを作って保存。
                 val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
-
                 task.name = name
                 task.date = date
-                task.imageId =imageId
-
             }
         }
-
-
     }
 
 

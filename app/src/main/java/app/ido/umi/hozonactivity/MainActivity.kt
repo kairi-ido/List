@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,17 +12,15 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.list_item.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 @Suppress("UNREACHABLE_CODE")
 class MainActivity : AppCompatActivity() {
-
+    //realm変数
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
     }
-
+    //アプリをはじめに起動したときに起こる
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,15 +39,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, SaveActivity::class.java)
             startActivity(intent)
         }
-
+        //taskListという変数に取得したデータを代入
         val taskList = readAll()
 
         // タスクリストが空だったときにダミーデータを生成する
         if (taskList.isEmpty()) {
             createDummyData()
         }
-
-
+        //リストを削除する
         val adapter =
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
                 override fun onItemClick(item: Item) {
@@ -60,17 +56,16 @@ class MainActivity : AppCompatActivity() {
                         .show()
                     delete(item.id)
                 }
+                //checkbox関連
                 override fun  onChosenItemsClick(task: Item, checked: Boolean){
                     // クリック時の処理
                     Toast.makeText(applicationContext, "買い物リストに移行します", Toast.LENGTH_LONG).show()
 
                     realm.executeTransaction {
+                        val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
                         task.needPurchase = checked
                     }
-
-
                 }
-
 
             }, true)
 
@@ -80,10 +75,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
-
-
-
+    //メニュー関連
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
 
@@ -120,33 +112,32 @@ class MainActivity : AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
     }
-
-
-
-
+    //画面終了時にrealm終了
     override fun onDestroy() {
         super.onDestroy()
         realm.close()
 
     }
 
+    //ダミーデータを作る詳細
     fun createDummyData() {
         for (i in 0..10) {
             create(R.drawable.ic_launcher_background, "商品名 $i")
         }
     }
 
+    //ダミーデータを作ります
     fun create(imageId: Int, content: String) {
-
         realm.executeTransaction {
             val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
             task.imageId = imageId
             task.content = content
         }
     }
-
-
+    //メソッド名（readAll)と返り値RealmResults<Item>を指定
     fun readAll(): RealmResults<Item> {
+        //realm.where(Item::class.java).findAll()→realmを使ってデータベースの中のItemリストから全部のデータを取り出している
+        //データを昇順に並べてくれるぞ
         return realm.where(Item::class.java).findAll().sort("date", Sort.ASCENDING)
     }
 
@@ -157,10 +148,6 @@ class MainActivity : AppCompatActivity() {
             task.content = content
         }
     }
-
-
-
-
 
     fun update(task: Item, content: String) {
         realm.executeTransaction {
@@ -190,4 +177,3 @@ class MainActivity : AppCompatActivity() {
 
 
 }
-

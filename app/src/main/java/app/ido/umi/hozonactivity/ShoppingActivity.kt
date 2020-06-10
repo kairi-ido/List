@@ -31,9 +31,6 @@ class ShoppingActivity : AppCompatActivity() {
             createDummyData()
         }
 
-
-
-
         val adapter =
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
                 override fun onItemClick(item: Item) {
