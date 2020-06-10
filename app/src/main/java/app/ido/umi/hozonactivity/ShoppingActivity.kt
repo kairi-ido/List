@@ -80,7 +80,7 @@ class ShoppingActivity : AppCompatActivity() {
 
         realm.executeTransaction {
             val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
-            task.imageId = imageId
+            task.imageId=imageId
             task.content = content
         }
     }

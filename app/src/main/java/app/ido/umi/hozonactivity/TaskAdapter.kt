@@ -45,7 +45,7 @@ class TaskAdapter(
 
     class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val container : LinearLayout = view.container
-        val imageView: ImageView = view.imageView
+        val imageView: ImageView = view.photo
         val contentTextView: TextView = view.contentTextView
         val dateTextView: TextView = view.dateTextView
         val check:CheckBox = view.check
