@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
@@ -34,13 +35,15 @@ class TaskAdapter(
         holder.container.setOnClickListener{
             listener.onItemClick(task)
         }
+        //imageViewをString型にする・・・これ？？
 
+        holder.imageView.load(task.imageUri)
 
         holder.contentTextView.text = task.name
         holder.dateTextView.text =task.date
-
+        //checkboxの処理
         holder.check.setOnCheckedChangeListener { _, isChecked ->
-            listener.onChosenItemsClick(Item(needPurchase = true), isChecked)
+            listener.onChosenItemsClick(task, isChecked)
         }
     }
 
@@ -54,7 +57,7 @@ class TaskAdapter(
     //idをもとにレイアウトを使う準備をしている
     class TaskViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val container : LinearLayout = view.container
-
+        val imageView:ImageView =view.imageView2
         val contentTextView: TextView = view.contentTextView
         val dateTextView: TextView = view.dateTextView
         val check:CheckBox = view.check

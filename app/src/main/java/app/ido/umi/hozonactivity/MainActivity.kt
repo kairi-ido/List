@@ -43,9 +43,7 @@ class MainActivity : AppCompatActivity() {
         val taskList = readAll()
 
         // タスクリストが空だったときにダミーデータを生成する
-        if (taskList.isEmpty()) {
-            createDummyData()
-        }
+
         //リストを削除する
         val adapter =
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
@@ -59,15 +57,18 @@ class MainActivity : AppCompatActivity() {
                 //checkbox関連
                 override fun  onChosenItemsClick(task: Item, checked: Boolean){
                     // クリック時の処理
+
                     Toast.makeText(applicationContext, "買い物リストに移行します", Toast.LENGTH_LONG).show()
 
                     realm.executeTransaction {
-                        val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
-                        task.needPurchase = checked
-                    }
+
+                            task.needPurchase = checked
+                        }
+
                 }
 
             }, true)
+
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -75,6 +76,9 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
+
     //メニュー関連
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
@@ -139,6 +143,9 @@ class MainActivity : AppCompatActivity() {
         //realm.where(Item::class.java).findAll()→realmを使ってデータベースの中のItemリストから全部のデータを取り出している
         //データを昇順に並べてくれるぞ
         return realm.where(Item::class.java).findAll().sort("date", Sort.ASCENDING)
+    }
+    fun readAll(task: Item){
+
     }
 
     fun update(id: String, content: String) {

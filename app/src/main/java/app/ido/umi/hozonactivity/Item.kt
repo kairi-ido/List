@@ -1,5 +1,6 @@
 package app.ido.umi.hozonactivity
 
+
 import android.media.Image
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
@@ -14,7 +15,8 @@ open class Item(
     open var content: String = "",
     open var name:String="",
     open var date: String ="",
-    open var needPurchase:Boolean=false
+    open var needPurchase:Boolean=false,
+    open var imageUri : String =""
 
 //RealmObject():realmで保存できる型にする
 ) : RealmObject()

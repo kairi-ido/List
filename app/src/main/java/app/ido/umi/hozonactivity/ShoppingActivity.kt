@@ -24,47 +24,53 @@ class ShoppingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping)
 
+        //taskListという変数に取得したデータを代入
         val taskList = readAll()
 
         // タスクリストが空だったときにダミーデータを生成する
-        if (taskList.isEmpty()) {
-            createDummyData()
-        }
 
+        //クリック関連
         val adapter =
             TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
                 override fun onItemClick(item: Item) {
+                    //リストを押したら消える
                     Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT)
                         .show()
                     delete(item.id)
                 }
 
                 override fun  onChosenItemsClick(task: Item, checked: Boolean) {
-                    // クリック時の処理
+                    //checkboxをクリックした時の処理
+                    //Toastで表示
+
                     Toast.makeText(applicationContext, "買い物リストに移行します", Toast.LENGTH_LONG).show()
 
+                    //realm.executeTransactionというブロックを作り、その中でrealmを使ってデータベースの操作をする。
+                    //これを書くことでデータベースへの書き込み(データの作成、更新、削除)ができるようになる。
                     realm.executeTransaction {
-                        task.needPurchase = checked
+
+                            task.needPurchase = checked
+
+
                     }
                 }
 
                 }, true)
 
+
+
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-
+        //ActionBarにMainActivityへ戻る矢印をつけます
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }
-
-
+    //画面終了時にrealm終了
     override fun onDestroy() {
         super.onDestroy()
         realm.close()
-
-
     }
     fun createDummyData() {
         for (i in 0..10) {
@@ -84,8 +90,13 @@ class ShoppingActivity : AppCompatActivity() {
 
 
 
-//realmの呼び出し
+    //realmの呼び出し
+    //メソッド名（readAll)と返り値RealmResults<Item>を指定
+    //データの読み取り
     fun readAll(): RealmResults<Item> {
+
+        //realm.where(Item::class.java).equalTo()→needPurchaseがtrueになったらrealmを使ってデータベースの中のItemリストから全部のデータを取り出している
+        //データを昇順に並べてくれるぞ
         return realm.where(Item::class.java).equalTo("needPurchase",true).findAll().sort("date", Sort.ASCENDING)
     }
 

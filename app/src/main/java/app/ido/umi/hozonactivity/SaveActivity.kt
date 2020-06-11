@@ -1,12 +1,15 @@
 package app.ido.umi.hozonactivity
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
+import coil.api.load
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_save.*
 import java.util.*
@@ -16,6 +19,8 @@ class SaveActivity : AppCompatActivity() {
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
     }
+    var imagePath:String = ""
+
     //SaveActivityが起動した時に起こる
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,16 +56,19 @@ class SaveActivity : AppCompatActivity() {
             val name:String = nameEditText.text.toString()
             val date:String = selectText.text.toString()
 
+
+
             //create（）というメソッドに引数をして渡す
-            create(name,date)
+            create(name,date,imagePath)
             //Toastで登録できたと表示する
             Toast.makeText(applicationContext, "登録しました", Toast.LENGTH_LONG).show()
 
         }
     }
     //ユーザーがピッカーでドキュメントを選択すると、onActivityResult()が呼び出しされる
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    @SuppressLint("WrongViewCast")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode,resultData)
         //ギャラリーから戻ってきたことを識別する
         if (resultCode != RESULT_OK) {
             return
@@ -70,11 +78,12 @@ class SaveActivity : AppCompatActivity() {
         when (requestCode) {
             READ_REQUEST_CODE -> {
                 try {
-                    data?.data?.also { uri ->
-                        val inputStream = contentResolver?.openInputStream(uri)
-                        val image = BitmapFactory.decodeStream(inputStream)
-                        val imageView = findViewById<ImageView>(R.id.imageView)
-                        imageView.setImageBitmap(image)
+                    resultData?.data?.also { uri ->
+
+                        val imageView: ImageView? = findViewById<ImageView>(R.id.imageView2)
+                       imageView?.load(uri)
+
+                        imagePath = uri.toString()
                     }
                 } catch (e: Exception) {
                     Toast.makeText(this, "エラーが発生しました", Toast.LENGTH_LONG).show()
@@ -82,7 +91,6 @@ class SaveActivity : AppCompatActivity() {
             }
         }
     }//第３引数：resultDataは取得したデータで、選択したドキュメントを指すURIにはresultData.dataでアクセスできる
-
 
     //クライアントアプリ（ドキュメント プロバイダが返したファイルを受け取るカスタムアプリ):ACTION_OPEN_DOCUMENT
     //CATEGORY_OPENABLE:画像ファイルのみが開くことのできるintent
@@ -106,8 +114,8 @@ class SaveActivity : AppCompatActivity() {
     }
 
 
-    //realmに新規リストとしてnameEditTextで書いたことを追加
-    fun create(name: String, date: String) {
+    //realmに新規リストとしてnameEditTextで書いたことを追加,写真をString型にする
+    fun create(name: String, date: String,imageUri: String) {
 
             //realm.executeTransactionというブロックを作り、その中でrealmを使ってデータベースの操作をする。
             //これを書くことでデータベースへの書き込み(データの作成、更新、削除)ができるようになる。
@@ -116,6 +124,7 @@ class SaveActivity : AppCompatActivity() {
                 val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
                 task.name = name
                 task.date = date
+                task.imageUri = imageUri
             }
         }
     }
