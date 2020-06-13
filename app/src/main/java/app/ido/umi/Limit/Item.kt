@@ -1,7 +1,6 @@
-package app.ido.umi.hozonactivity
+package app.ido.umi.Limit
 
 
-import android.media.Image
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.util.*

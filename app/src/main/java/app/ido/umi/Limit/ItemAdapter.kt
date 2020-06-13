@@ -1,4 +1,4 @@
-package app.ido.umi.hozonactivity
+package app.ido.umi.Limit
 
 
 import android.content.Context
@@ -12,7 +12,7 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item.view.*
 
-class TaskAdapter(
+class ItemAdapter(
     private val context: Context,
     private var taskList: OrderedRealmCollection<Item>?,
     private var listener: OnItemClickListener,
@@ -21,7 +21,7 @@ class TaskAdapter(
 
 //TaskAdapterクラスにItem, TaskAdapterクラスを継承する
 //autoUpdateというパラメータ（変数の関係）trueにして渡すと、DBを更新した際にRecyclerViewを自動で更新してくれる
-    RealmRecyclerViewAdapter<Item, TaskAdapter.TaskViewHolder>(taskList, autoUpdate) {
+    RealmRecyclerViewAdapter<Item, ItemAdapter.TaskViewHolder>(taskList, autoUpdate) {
 
     //リストの要素数を返すメソッド
     //RecyclerViewで表示するアイテムの個数
@@ -30,20 +30,20 @@ class TaskAdapter(
     //Layoutの画像や文字を設定する
     //onBindViewHolderの中にItemのposition(番目)の要素をViewHolderに表示する
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val task: Item = taskList?.get(position) ?: return
+        val seasoning: Item = taskList?.get(position) ?: return
 
         holder.container.setOnClickListener{
-            listener.onItemClick(task)
+            listener.onItemClick(seasoning)
         }
         //imageViewをString型にする・・・これ？？
 
-        holder.imageView.load(task.imageUri)
+        holder.imageView.load(seasoning.imageUri)
 
-        holder.contentTextView.text = task.name
-        holder.dateTextView.text =task.date
+        holder.contentTextView.text = seasoning.name
+        holder.dateTextView.text =seasoning.date
         //checkboxの処理
         holder.check.setOnCheckedChangeListener { _, isChecked ->
-            listener.onChosenItemsClick(task, isChecked)
+            listener.onChosenItemsClick(seasoning, isChecked)
         }
     }
 

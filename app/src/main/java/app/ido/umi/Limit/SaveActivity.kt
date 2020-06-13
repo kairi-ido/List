@@ -1,10 +1,8 @@
-package app.ido.umi.hozonactivity
+package app.ido.umi.Limit
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
@@ -19,6 +17,7 @@ class SaveActivity : AppCompatActivity() {
     private val realm: Realm by lazy {
         Realm.getDefaultInstance()
     }
+    //imagePathをString型で宣言
     var imagePath:String = ""
 
     //SaveActivityが起動した時に起こる
@@ -121,10 +120,10 @@ class SaveActivity : AppCompatActivity() {
             //これを書くことでデータベースへの書き込み(データの作成、更新、削除)ができるようになる。
             realm.executeTransaction {
                 //新規リスト作成。it.createObject(データ型::class.java)と書くことでDBに新しいオブジェクトを作って保存。
-                val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
-                task.name = name
-                task.date = date
-                task.imageUri = imageUri
+                val seasoning = it.createObject(Item::class.java, UUID.randomUUID().toString())
+                seasoning.name = name
+                seasoning.date = date
+                seasoning.imageUri = imageUri
             }
         }
     }

@@ -1,4 +1,4 @@
-package app.ido.umi.hozonactivity
+package app.ido.umi.Limit
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

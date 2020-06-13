@@ -1,4 +1,4 @@
-package app.ido.umi.hozonactivity
+package app.ido.umi.Limit
 
 import android.content.Intent
 import android.os.Bundle
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         //リストを削除する
         val adapter =
-            TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
+            ItemAdapter(this, taskList, object : ItemAdapter.OnItemClickListener {
                 override fun onItemClick(item: Item) {
                     // クリック時の処理
 
@@ -55,14 +55,14 @@ class MainActivity : AppCompatActivity() {
                     delete(item.id)
                 }
                 //checkbox関連
-                override fun  onChosenItemsClick(task: Item, checked: Boolean){
+                override fun  onChosenItemsClick(seasoning: Item, checked: Boolean){
                     // クリック時の処理
-
+                    //Toastで買い物リストに移行するとでて来るようにする
                     Toast.makeText(applicationContext, "買い物リストに移行します", Toast.LENGTH_LONG).show()
 
                     realm.executeTransaction {
-
-                            task.needPurchase = checked
+                            //needPurchaseをチェックした(true)
+                        seasoning.needPurchase = checked
                         }
 
                 }
@@ -133,9 +133,9 @@ class MainActivity : AppCompatActivity() {
     //ダミーデータを作ります
     fun create(imageId: Int, content: String) {
         realm.executeTransaction {
-            val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
-            task.imageId = imageId
-            task.content = content
+            val seasoning = it.createObject(Item::class.java, UUID.randomUUID().toString())
+            seasoning.imageId = imageId
+            seasoning.content = content
         }
     }
     //メソッド名（readAll)と返り値RealmResults<Item>を指定
@@ -144,35 +144,35 @@ class MainActivity : AppCompatActivity() {
         //データを昇順に並べてくれるぞ
         return realm.where(Item::class.java).findAll().sort("date", Sort.ASCENDING)
     }
-    fun readAll(task: Item){
+    fun readAll(seasoning: Item){
 
     }
 
     fun update(id: String, content: String) {
         realm.executeTransaction {
-            val task = realm.where(Item::class.java).equalTo("id", id).findFirst()
+            val seasoning = realm.where(Item::class.java).equalTo("id", id).findFirst()
                 ?: return@executeTransaction
-            task.content = content
+            seasoning.content = content
         }
     }
 
-    fun update(task: Item, content: String) {
+    fun update(seasoning: Item, content: String) {
         realm.executeTransaction {
-            task.content = content
+            seasoning.content = content
         }
     }
 
     fun delete(id: String) {
         realm.executeTransaction {
-            val task = realm.where(Item::class.java).equalTo("id", id).findFirst()
+            val seasoning = realm.where(Item::class.java).equalTo("id", id).findFirst()
                 ?: return@executeTransaction
-            task.deleteFromRealm()
+            seasoning.deleteFromRealm()
         }
     }
 
-    fun delete(task: Item) {
+    fun delete(seasoning: Item) {
         realm.executeTransaction {
-            task.deleteFromRealm()
+            seasoning.deleteFromRealm()
         }
     }
 

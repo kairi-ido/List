@@ -1,4 +1,4 @@
-package app.ido.umi.hozonactivity
+package app.ido.umi.Limit
 
 import android.app.Application
 import io.realm.Realm

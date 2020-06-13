@@ -1,9 +1,8 @@
-package app.ido.umi.hozonactivity
+package app.ido.umi.Limit
 
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.realm.Realm
@@ -31,7 +30,7 @@ class ShoppingActivity : AppCompatActivity() {
 
         //クリック関連
         val adapter =
-            TaskAdapter(this, taskList, object : TaskAdapter.OnItemClickListener {
+            ItemAdapter(this, taskList, object : ItemAdapter.OnItemClickListener {
                 override fun onItemClick(item: Item) {
                     //リストを押したら消える
                     Toast.makeText(applicationContext, item.name + "を削除しました", Toast.LENGTH_SHORT)
@@ -39,7 +38,7 @@ class ShoppingActivity : AppCompatActivity() {
                     delete(item.id)
                 }
 
-                override fun  onChosenItemsClick(task: Item, checked: Boolean) {
+                override fun  onChosenItemsClick(seasoning: Item, checked: Boolean) {
                     //checkboxをクリックした時の処理
                     //Toastで表示
 
@@ -49,7 +48,8 @@ class ShoppingActivity : AppCompatActivity() {
                     //これを書くことでデータベースへの書き込み(データの作成、更新、削除)ができるようになる。
                     realm.executeTransaction {
 
-                            task.needPurchase = checked
+                            //needPurchaseをtrueにするよ
+                            seasoning.needPurchase = checked
 
 
                     }
@@ -82,9 +82,9 @@ class ShoppingActivity : AppCompatActivity() {
     fun create(imageId: Int, content: String) {
 
         realm.executeTransaction {
-            val task = it.createObject(Item::class.java, UUID.randomUUID().toString())
-            task.imageId=imageId
-            task.content = content
+            val seasoning = it.createObject(Item::class.java, UUID.randomUUID().toString())
+            seasoning.imageId=imageId
+            seasoning.content = content
         }
     }
 
@@ -102,29 +102,29 @@ class ShoppingActivity : AppCompatActivity() {
 
     fun update(id: String, content: String) {
         realm.executeTransaction {
-            val task = realm.where(Item::class.java).equalTo("id", id).findFirst()
+            val seasoning = realm.where(Item::class.java).equalTo("id", id).findFirst()
                 ?: return@executeTransaction
-            task.content = content
+            seasoning.content = content
         }
     }
 
-    fun update(task: Item, content: String) {
+    fun update(seasoning: Item, content: String) {
         realm.executeTransaction {
-            task.content = content
+            seasoning.content = content
         }
     }
 
     fun delete(id: String) {
         realm.executeTransaction {
-            val task = realm.where(Item::class.java).equalTo("id", id).findFirst()
+            val seasoning = realm.where(Item::class.java).equalTo("id", id).findFirst()
                 ?: return@executeTransaction
-            task.deleteFromRealm()
+            seasoning.deleteFromRealm()
         }
     }
 
-    fun delete(task: Item) {
+    fun delete(seasoning: Item) {
         realm.executeTransaction {
-            task.deleteFromRealm()
+            seasoning.deleteFromRealm()
         }
     }
 
