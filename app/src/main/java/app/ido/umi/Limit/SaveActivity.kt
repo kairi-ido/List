@@ -25,6 +25,12 @@ class SaveActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save)
 
+        //タイトル、アイコン表示
+        supportActionBar?.title = "商品登録画面"
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+        getSupportActionBar()?.setIcon(R.mipmap.ic_launcher_foreground)
+
+
         //ActionBarにMainActivityへ戻る矢印をつけます
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -35,7 +41,7 @@ class SaveActivity : AppCompatActivity() {
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         //タップボタンを押したらdatepickerがでできて、selectTextに表示
-        dateButton.setOnClickListener {
+        selectText.setOnClickListener {
             val dtp = DatePickerDialog(
                 this, DatePickerDialog.OnDateSetListener { view, y, m, d ->
                     selectText.text = "${y}年" + "${m + 1}月" + "${d}日"

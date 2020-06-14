@@ -23,6 +23,11 @@ class ShoppingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping)
 
+        //タイトル表示、アイコン表示
+        supportActionBar?.title = "買い物リスト"
+        getSupportActionBar()?.setDisplayShowHomeEnabled(true)
+        getSupportActionBar()?.setIcon(R.mipmap.ic_launcher_foreground)
+
         //taskListという変数に取得したデータを代入
         val taskList = readAll()
 

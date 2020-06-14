@@ -4,94 +4,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEF7FF"
     tools:context=".SaveActivity">
 
 
-    <TextView
-        android:id="@+id/selectText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="53dp"
-        android:text="賞味期限"
-        app:layout_constraintBottom_toTopOf="@+id/hozonButton"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
-
-    <Button
-        android:id="@+id/dateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="38dp"
-        android:background="@drawable/button_background"
-        android:text="日付選択"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
-
-    <Button
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="82dp"
-        android:background="@drawable/button_background"
-        android:text="画像選択"
-        app:layout_constraintBottom_toTopOf="@+id/selectText"
-        app:layout_constraintStart_toStartOf="@+id/dateButton"
-        app:layout_constraintTop_toBottomOf="@+id/dateButton" />
-
     <EditText
         android:id="@+id/nameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/saveactivity_design"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="商品名を入れてね"
-        app:layout_constraintBottom_toTopOf="@+id/dateButton"
+        android:textColor="#808080"
+        app:layout_constraintBottom_toTopOf="@+id/selectText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
         android:id="@+id/hozonButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="31dp"
+        android:layout_marginBottom="33dp"
         android:background="@drawable/button_background"
         android:text="登録"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="146dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="26dp"
-        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bun" />
+    <Button
+        android:id="@+id/imageButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="73dp"
+        android:background="@drawable/saveactivity_design"
+        android:text="画像選択"
+        android:textColor="#808080"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="381dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="12dp"
+        android:layout_width="161dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="53dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/saveactivity_design"
         app:layout_constraintBottom_toTopOf="@+id/hozonButton"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/selectText" />
+
+    <TextView
+        android:id="@+id/selectText"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/saveactivity_design"
+        android:drawableRight="@drawable/ic_calendar"
+        android:text="賞味期限"
+        android:textColor="#808080"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/selectText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="130dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginBottom="37dp"
+        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bun" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

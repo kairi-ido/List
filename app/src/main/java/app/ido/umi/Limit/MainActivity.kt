@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
 
         //アクションバーにアイコンを表示
-        supportActionBar?.title = "とりみっと"
+        supportActionBar?.title = "残り物リスト"
         getSupportActionBar()?.setDisplayShowHomeEnabled(true)
         getSupportActionBar()?.setIcon(R.mipmap.ic_launcher_foreground)
 
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         val inflater = menuInflater
         //メニューのリソース選択
-        inflater.inflate(R.menu.bottom_navigation_menu, menu)
+        inflater.inflate(R.menu.menubar, menu)
         return true
     }
 
@@ -111,6 +111,7 @@ class MainActivity : AppCompatActivity() {
 
                 val intent = Intent(applicationContext, ShoppingActivity::class.java)
                 startActivity(intent)
+
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
