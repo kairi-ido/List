@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     }
     //アプリをはじめに起動したときに起こる
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

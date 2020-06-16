@@ -18,7 +18,7 @@
         android:background="@drawable/saveactivity_design"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="商品名を入れてね"
+        android:hint="商品名を入れてね"
         android:textColor="#808080"
         app:layout_constraintBottom_toTopOf="@+id/selectText"
         app:layout_constraintEnd_toEndOf="parent"

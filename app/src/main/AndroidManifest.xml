@@ -13,7 +13,8 @@
         <activity android:name="app.ido.umi.Limit.ShoppingActivity" />
         <activity android:name="app.ido.umi.Limit.ExplanationActivity" />
         <activity android:name="app.ido.umi.Limit.SaveActivity" />
-        <activity android:name="app.ido.umi.Limit.MainActivity">
+        <activity android:name="app.ido.umi.Limit.MainActivity"
+            android:theme="@style/AppTheme.Screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
